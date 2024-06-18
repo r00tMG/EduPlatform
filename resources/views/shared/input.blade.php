@@ -6,7 +6,7 @@ $value ??= '';
 $label ??= ucfirst($name);
 
 @endphp
-<div @class(['form-group', $class])>
+<div @class(['form-group mb-3', $class])>
     <labe for="{{ $name }}">{{ $label }}</labe>
     @if( $name === 'describ' )
         <textarea class = "form-control @error($name) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}">{{ old($name,$value) }}</textarea>

@@ -16,11 +16,9 @@ class CoursController extends Controller
      */
     public function index()
     {
-        $cours = Cours::all()->orderBy('created_at','DESC')->paginate(5);
-
-        return view('enseignant.cours.index',[
-            'cours' => $cours
-        ]);
+        $cours = Cours::orderBy('created_at','DESC')->paginate(5);
+        //dd($cours);
+        return view('enseignant.cours.index',compact('cours'));
     }
 
     /**
