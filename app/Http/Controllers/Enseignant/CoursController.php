@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CoursFormRequest;
 use App\Models\Cours;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoursController extends Controller
 {
@@ -14,10 +15,15 @@ class CoursController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /*public function __construct()
+    {
+        $this->authorizeResource(Cours::class,'cours');
+    }*/
     public function index()
     {
         $cours = Cours::orderBy('created_at','DESC')->paginate(5);
         //dd($cours);
+        //dd(Auth::user()->role);
         return view('enseignant.cours.index',compact('cours'));
     }
 
@@ -32,6 +38,8 @@ class CoursController extends Controller
         $cour->fill([
             'libelle' => 'PHP'
         ]);
+        $this->authorize('delete',$cour);
+
         return view('enseignant.cours.form',[
             'cour' => $cour
         ]);
@@ -46,7 +54,7 @@ class CoursController extends Controller
     public function store(CoursFormRequest $request)
     {
         $cours = Cours::create($request->validated());
-        //dd($cours);
+
         return redirect()->route('enseignant.cours.index',[
             'cours' => $cours
         ])->with('success', 'Le cours a été bien créé');
@@ -87,6 +95,8 @@ class CoursController extends Controller
     public function update(CoursFormRequest $request, Cours $cour)
     {
         //dd($cour);
+        $this->authorize('update',$cour);
+
         $cour->update($request->validated());
         return redirect()->route('enseignant.cours.index')->with('success', 'Le cours a été bien modifié');
     }
@@ -99,6 +109,8 @@ class CoursController extends Controller
      */
     public function destroy(Cours $cour)
     {
+        $this->authorize('delete',$cour);
+
         $cour->delete();
         return redirect()->route('enseignant.cours.index')->with('success', 'Le cours a été bien supprimé');
     }

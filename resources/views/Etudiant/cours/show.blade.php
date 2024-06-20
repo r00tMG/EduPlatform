@@ -1,8 +1,8 @@
 @extends('etudiant.home')
-@section('title','Consultation du '.$cour->libelle.' ')
+@section('title','Consultation du cours: '.$cour->libelle.' ')
 @section('content')
     <div class="container me-auto w-75">
-        <h3 class="text-center my-5">@yield('title')</h3>
+        <h3 class="text-center my-5 text-decoration-underline">@yield('title')</h3>
         <div class="row">
                 <h4>Libellé : {{ $cour->libelle }}</h4>
                 <p>Description: {{ $cour->describ }}</p>

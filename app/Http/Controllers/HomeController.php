@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InscrireFormRequest;
+use App\Http\Requests\SearchFormRequest;
 use App\Models\Cours;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,17 @@ class HomeController extends Controller
         ]);
     }
 
-    public function index()
+    public function index(SearchFormRequest $request)
     {
-        $cours = Cours::orderBy('created_at','DESC')->paginate(6);
+        $query = Cours::query();
+        #$cours = Cours::orderBy('created_at','DESC')->paginate(6);
+        if ($request->has('libelle'))
+        {
+            $query = $query->where('libelle', 'like', "%{$request->input('libelle')}%");
+        }
         return view('etudiant.cours.index',[
-           'cours' => $cours
+            'cours' => $query->orderBy('created_at','DESC')->paginate(4),
+           'input' => $request->validated()
         ]);
     }
 

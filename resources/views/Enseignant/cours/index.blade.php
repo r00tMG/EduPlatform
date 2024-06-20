@@ -22,6 +22,7 @@
                         <td>
                             <a href="{{ route('enseignant.cours.edit',$cour) }}" class="btn btn-primary btn-sm">Editer</a>
                         </td>
+                        @can('delete',$cour)
                         <td>
                             <form action="{{ route('enseignant.cours.destroy',$cour) }}" method="POST">
                                 @csrf
@@ -29,6 +30,7 @@
                                 <button class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

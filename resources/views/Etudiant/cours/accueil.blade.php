@@ -1,8 +1,12 @@
 @extends('etudiant.home')
-@section('title','Liste des cours')
+@section('title','Bienvenu sur votre page d\'accueil EduPlateForme')
 @section('content')
+    <div class="shadow m-5 p-5">
+        <h3 class="text-center my-3">@yield('title')</h3>
+        <p class="text-center">"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+            "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</p>
+    </div>
     <div class="container me-auto w-75">
-    <h3 class="text-center my-3">@yield('title')</h3>
         <div class="row">
                 @foreach($cours as $cour)
                     <div class="col">
