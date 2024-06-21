@@ -24,12 +24,12 @@ class InscrireFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'user' => ['required'],
             'firstname' => ['required', 'string', 'min:4'],
             'lastname' => ['required', 'string', 'min:4'],
             'email' => ['required', 'email', 'min:4'],
-            'phone' => ['required', 'integer', 'min:7'],
+            'phone' => ['required', 'string', 'min:7'],
             'describ' => ['required', 'string', 'min:4'],
-
         ];
     }
 }

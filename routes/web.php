@@ -23,12 +23,13 @@ Route::get('/etudiant/cours', [\App\Http\Controllers\HomeController::class,'inde
 Route::get('cours/{cour}',[\App\Http\Controllers\HomeController::class,'show'])->name('cours.show');
 
 # Formulaire d'inscription dans le show.blade.php
-Route::post('inscrire/{cours}/cours',[\App\Http\Controllers\HomeController::class,'inscrire'])->name('cours.inscrire');
+Route::post('inscrire/{id}/cours',[\App\Http\Controllers\HomeController::class,'inscrire'])->name('cours.inscrire');
+Route::get('mescours',[\App\Http\Controllers\HomeController::class,'mescours'])->name('etudiant.cours.mescours');
 
 #Search
 #Route::get('search',[\App\Http\Controllers\HomeController::class,'search'])->name('cours.search');
 
-# Authorization
+# Authorization et Authentication users
 Route::get('login',[\App\Http\Controllers\AuthController::class,'login'])
     ->middleware('guest')
     ->name('login');
@@ -43,10 +44,13 @@ Route::delete('logout',[\App\Http\Controllers\AuthController::class,'logout'])
 Route::get('register',[\App\Http\Controllers\AuthController::class,'register'])->name('register');
 Route::post('register',[\App\Http\Controllers\AuthController::class,'toRegister'])->name('toRegister');
 
+#Route groupe enseignant
 Route::prefix('enseignant/')->middleware('auth')->name('enseignant.')->group(function (){
     Route::resource('cours',CoursController::class);
 
 });
+
+#Route groupe admin
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

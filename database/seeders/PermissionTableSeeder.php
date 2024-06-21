@@ -27,7 +27,9 @@ class PermissionTableSeeder extends Seeder
             'cours-edit',
             'cours-delete',
             'cours-inscription',
-            'cours-module-online'
+            'cours-module-online',
+            'acces-api',
+
         ];
 
         foreach ($permissions as $permission) {

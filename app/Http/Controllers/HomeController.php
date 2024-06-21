@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InscrireFormRequest;
 use App\Http\Requests\SearchFormRequest;
+use App\Mail\CoursInscriptionMail;
 use App\Models\Cours;
+use App\Models\Inscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -39,8 +44,32 @@ class HomeController extends Controller
 
     }
 
-    public function inscrire(InscrireFormRequest $request,Cours $cour)
+    public function inscrire(InscrireFormRequest $request,$id)
     {
+        $cour = Cours::find($id);
+        $data = $request->validated();
 
+        Inscription::create([
+            'user' => $data['user'],
+            'firstname'=> $data['firstname'],
+            'lastname'=> $data['email'],
+            'email'=> $data['email'],
+            'phone'=> $data['phone'],
+            'message'=> $data['describ'],
+            'libelle'=> $cour['libelle'],
+            'describ'=> $cour['describ']
+        ]);
+
+        return back()->with('success', 'Merci d\'avoir inscrite à cette cours');
+
+    }
+
+    public function mescours()
+    {
+        $cours = DB::table('inscriptions')->where('user',Auth::user()->email)->get();
+        //dd($cours[0]->libelle);
+        return view('etudiant.cours.mescours',[
+            'cours' => $cours
+        ]);
     }
 }

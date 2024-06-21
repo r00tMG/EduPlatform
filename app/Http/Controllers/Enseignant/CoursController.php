@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Enseignant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoursFormRequest;
 use App\Models\Cours;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class CoursController extends Controller
 {
@@ -15,13 +17,15 @@ class CoursController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*public function __construct()
+    public function __construct()
     {
-        $this->authorizeResource(Cours::class,'cours');
-    }*/
+        #$this->authorizeResource(Cours::class,['delete','create','update']);
+        #$this->middleware('permission:cours-list|cours-create|cours-edit|cours-delete');
+    }
     public function index()
     {
         $cours = Cours::orderBy('created_at','DESC')->paginate(5);
+        #$this->authorize('viewAny',$cours);
         //dd($cours);
         //dd(Auth::user()->role);
         return view('enseignant.cours.index',compact('cours'));
@@ -34,11 +38,13 @@ class CoursController extends Controller
      */
     public function create()
     {
+        //dd(User::pluck('name','role'));
+
         $cour = new Cours();
         $cour->fill([
             'libelle' => 'PHP'
         ]);
-        $this->authorize('delete',$cour);
+        $this->authorize('create',$cour);
 
         return view('enseignant.cours.form',[
             'cour' => $cour

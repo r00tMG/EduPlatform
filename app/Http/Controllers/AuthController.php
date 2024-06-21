@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -33,6 +34,9 @@ class AuthController extends Controller
             'password' => Hash::make('1234'),
 
         ]);*/
+        $role = Role::pluck('name');
+
+        //dd($role);
 
         return view('auth.login');
     }
@@ -40,19 +44,30 @@ class AuthController extends Controller
     public function doLogin(LoginFormRequest $request)
     {
         $credentials = $request->validated();
+
         if(Auth::attempt($credentials) && Auth::user()->role == 'enseignant')
         {
             $request->session()->regenerate();
             return redirect()->intended(route('enseignant.cours.index'));
 
-        }elseif (Auth::attempt($credentials) && Auth::user()->role == 'user')
+        }
+        if (Auth::attempt($credentials) && Auth::user()->role == 'user')
         {
             $request->session()->regenerate();
             return redirect()->intended(route('etudiant.cours.accueil'));
-        }else{
+        }
+        if (Auth::attempt($credentials) && Auth::user()->role == 'admin')
+        {
 
             $request->session()->regenerate();
             return redirect()->intended(route('users.index'));
+
+        }
+        if (Auth::attempt($credentials) && Auth::user()->role == 'developpeur')
+        {
+
+            $request->session()->regenerate();
+            return redirect()->intended(url('/api/cours'));
 
         }
         return back()->withErrors([

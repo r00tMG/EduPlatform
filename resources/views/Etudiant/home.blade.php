@@ -10,17 +10,17 @@
 
     <title>@yield('titre')</title>
 </head>
-<body>
-
+<style>
+    body{
+        color: white;
+    }
+</style>
+<body class="bg-dark">
 <div class="w-75 m-auto mt-5">
     @include('shared.navtab')
 </div>
 
-@if(session('success'))
-    <div class="w-25 m-auto alert alert-success">
-        {{session('success')}}
-    </div>
-@endif
+
 @if($errors->any() !==false)
     <div class="alert alert-danger">
         <ul class="my-0">

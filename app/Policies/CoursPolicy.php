@@ -41,7 +41,7 @@ class CoursPolicy
      */
     public function create(User $user)
     {
-        return $user->role == 'enseignant';
+        return $user->role === 'enseignant';
     }
 
     /**

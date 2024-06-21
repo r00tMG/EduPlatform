@@ -10,7 +10,12 @@
 
     <title>@yield('titre')</title>
 </head>
-<body>
+<style>
+    body{
+        color: white;
+    }
+</style>
+<body class="bg-dark">
 
 @yield('content')
 

@@ -11,8 +11,11 @@
     <li class="nav-item">
         <a class="nav-link @if(request()->route()->getName() == 'etudiant.cours.accueil') active @endif " href="{{route('etudiant.cours.accueil')}}">Home</a>
     </li>
-    <li class="nav-item me-auto">
+    <li class="nav-item ">
         <a class="nav-link @if(request()->route()->getName() == 'etudiant.cours.index') active @endif " aria-current="page" href="{{ route('etudiant.cours.index') }}">Cours</a>
+    </li>
+    <li class="nav-item me-auto">
+        <a class="nav-link @if(request()->route()->getName() == 'etudiant.cours.mescours') active @endif " aria-current="page" href="{{ route('etudiant.cours.mescours') }}">Mes Cours</a>
     </li>
         @endif
     @endauth

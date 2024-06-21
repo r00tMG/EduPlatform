@@ -10,7 +10,12 @@
 
     <title>@yield('titre')</title>
 </head>
-<body>
+<style>
+    body{
+        color: white;
+    }
+</style>
+<body class="bg-dark">
 
 <div class="w-75 m-auto mt-5">
     @include('shared.navtab')
